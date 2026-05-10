@@ -6,12 +6,12 @@ const SocketContext = createContext(null)
 export function SocketProvider({ children }) {
   const socketRef = useRef(null)
 
-  useEffect(() => {
-    socketRef.current = io('http://localhost:5000', {
-      transports: ['websocket'],
-      reconnectionAttempts: 5,
-      reconnectionDelay: 1000,
-    })
+useEffect(() => {
+  socketRef.current = io(import.meta.env.VITE_API_URL || 'http://localhost:5000', {
+    transports: ['polling', 'websocket'], 
+    reconnectionAttempts: 5,
+    reconnectionDelay: 1000,
+  })
 
     socketRef.current.on('connect_error', (err) => {
       console.warn('Socket connection error:', err.message)
